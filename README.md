@@ -1,4 +1,4 @@
-\# Children's Storybook Project
+# Children's Storybook Project
 
 
 
@@ -6,39 +6,39 @@ A web-based interactive storybook created for my children, focusing on a seamles
 
 
 
-\## Project Vision
+## Project Vision
 
 The story, including all text and illustrations, is original work created specifically for a younger audience (ages 4–6). 
 
 
 
-\### Artistic Direction
+### Artistic Direction
 
 The illustrations feature a deliberate "hand-drawn" and "sketchy" aesthetic. This style was chosen intentionally to resonate with children's own creativity and to provide a warm, approachable feeling that differs from polished commercial graphics.
 
 
 
-\## Features
+## Features
 
-\- Original storytelling and character design.
+- Original storytelling and character design.
 
-\- Minimalist web interface to keep focus on the narrative.
+- Minimalist web interface to keep focus on the narrative.
 
-\- Responsive design for reading on tablets and mobile devices.
+- Responsive design for reading on tablets and mobile devices.
 
-\- Focus on performance and accessibility.
+- Focus on performance and accessibility.
 
 
 
-\## Technical Implementation
+## Technical Implementation
 
 This project is built using a "Vanilla" web stack to ensure high performance and a low environmental footprint:
 
-\- HTML5
+- HTML5
 
-\- CSS3
+- CSS3
 
-\- JavaScript
+- JavaScript
 
 
 
@@ -46,13 +46,14 @@ The deployment is fully automated via GitHub Actions, ensuring that the latest v
 
 
 
-\## Security and Best Practices
+## Security and Best Practices
 
 As part of an ongoing focus on IT security, this project follows best practices for web development:
 
-\- Optimized asset loading (WebP format).
+- Optimized asset loading (WebP format).
 
-\- Secure deployment pipeline.
+- Secure deployment pipeline.
 
-\- Clean, maintainable code structure without unnecessary third-party dependencies.
+- Clean, maintainable code structure without unnecessary third-party dependencies.
+
 
