@@ -7,16 +7,14 @@ html,
 body {
   margin: 0;
   padding: 0;
-  /* Använder min-height för att tillåta innehållet att styra höjden vid behov */
   min-height: 100vh;
   min-height: 100svh;
   background-color: #fdfaf6;
   font-family: "Segoe UI", Tahoma, sans-serif;
-  /* Förhindrar att hela body-elementet skrollar oväntat */
-  overflow: hidden;
+  overflow: hidden; /* Förhindrar dubbla scrollbars på enhetsnivå */
 }
 
-/* Tillgänglighet: Dölj rubriker men låt skärmläsare hitta dem */
+/* Tillgänglighet */
 .sr-only {
   position: absolute;
   width: 1px;
@@ -45,7 +43,6 @@ body {
   background-color: #fdfaf6;
 }
 
-/* Dölj scrollbar men behåll funktionalitet */
 .book-container::-webkit-scrollbar {
   display: none;
 }
@@ -58,18 +55,17 @@ body {
 .page {
   flex: 0 0 100vw;
   width: 100vw;
-  /* Tvingar sidan att hålla sig inom viewportens ramar */
   height: 100vh;
   height: 100svh;
   scroll-snap-align: start;
   scroll-snap-stop: always;
   display: flex;
   justify-content: center;
-  align-items: flex-start; /* Startar alltid i toppen på mobilen */
-  padding: 15px;
+  align-items: flex-start; /* Tvingar innehåll till toppen */
+  padding: 0; /* Padding sköts av .content för bättre kontroll */
   overflow-y: auto;
-  /* Tar bort webbläsarens tendens att fokusera på textblock vid laddning */
   scroll-margin: 0;
+  -webkit-overflow-scrolling: touch;
 }
 
 .content {
@@ -78,9 +74,9 @@ body {
   gap: 20px;
   width: 100%;
   max-width: 600px;
-  /* Säkerställer att innehållet inte skrollas ner av marginaler */
   margin: 0 auto;
-  padding-top: 40px; /* Ger plats åt indikatorn utan att täcka bilden */
+  /* Extra padding i toppen förhindrar att webbläsaren autoscrollar ner till texten */
+  padding: 60px 20px 40px 20px;
 }
 
 /* --- SKRIVBORDSLAYOUT (Dator - över 900px) --- */
@@ -94,7 +90,7 @@ body {
   }
 
   .page {
-    align-items: center; /* Centrera i boken på desktop */
+    align-items: center;
     padding: 4vh;
     overflow-y: hidden;
     background-color: rgba(253, 250, 246, 0.4);
@@ -105,7 +101,7 @@ body {
     grid-template-columns: 1fr 1fr;
     gap: 100px;
     max-width: 65%;
-    padding-top: 0;
+    padding-top: 0; /* Ingen extra padding behövs inuti bok-illustrationen */
   }
 }
 
@@ -170,7 +166,7 @@ p {
 /* Sidräknaren (1 / 16) */
 #progress-indicator {
   position: fixed;
-  top: 15px; /* Flyttad till toppen för att inte döljas av fingrar vid swipe */
+  top: 15px;
   right: 15px;
   background: rgba(255, 255, 255, 0.9);
   padding: 5px 12px;

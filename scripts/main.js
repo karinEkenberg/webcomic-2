@@ -1,16 +1,21 @@
 "use strict";
-history.scrollRestoration = "manual";
+
+// Förhindra att webbläsaren kommer ihåg skrollposition vid omladdning
+if ("scrollRestoration" in history) {
+  history.scrollRestoration = "manual";
+}
 
 document.addEventListener("DOMContentLoaded", () => {
   const container = document.querySelector(".book-container");
   const hints = document.querySelectorAll(".hint-box");
   const closeButtons = document.querySelectorAll(".close-hint");
   const progressIndicator = document.getElementById("progress-indicator");
-  const totalPages = document.querySelectorAll(".page").length;
   const pages = document.querySelectorAll(".page");
-  pages.forEach((page) => (page.scrollTop = 0));
+  const totalPages = pages.length;
 
+  // Nollställ positioner direkt
   container.scrollLeft = 0;
+  pages.forEach((page) => (page.scrollTop = 0));
 
   const hideHints = () => {
     hints.forEach((hint) => {
@@ -25,8 +30,10 @@ document.addEventListener("DOMContentLoaded", () => {
     btn.addEventListener("click", hideHints);
   });
 
+  // Stäng automatiskt efter 5 sekunder
   setTimeout(hideHints, 5000);
 
+  // Piltangentsnavigation
   document.addEventListener("keydown", (e) => {
     const scrollAmount = window.innerWidth;
     if (e.key === "ArrowRight") {
@@ -38,6 +45,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
+  // Mushjul horisontellt
   container.addEventListener(
     "wheel",
     (evt) => {
@@ -50,11 +58,15 @@ document.addEventListener("DOMContentLoaded", () => {
     { passive: false },
   );
 
+  // Sidindikator (beräknas vid skroll)
   container.addEventListener(
     "scroll",
     () => {
+      // Byter nummer när hälften av nästa sida visas
       const currentPage =
-        Math.round(container.scrollLeft / window.innerWidth) + 1;
+        Math.floor(
+          (container.scrollLeft + window.innerWidth / 2) / window.innerWidth,
+        ) + 1;
 
       if (progressIndicator) {
         progressIndicator.innerText = `${currentPage} / ${totalPages}`;
@@ -62,4 +74,13 @@ document.addEventListener("DOMContentLoaded", () => {
     },
     { passive: true },
   );
+
+  // Extra säkerhetsåtgärd för mobila webbläsare vid fullständig laddning
+  window.addEventListener("load", () => {
+    window.scrollTo(0, 0);
+    setTimeout(() => {
+      container.scrollLeft = 0;
+      pages.forEach((page) => (page.scrollTop = 0));
+    }, 150);
+  });
 });
