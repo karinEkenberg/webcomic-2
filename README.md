@@ -3,6 +3,9 @@
 An interactive, web-based children's book designed with a focus on performance, accessibility, and environmental impact.
 
 ## Project Overview
+<img width="1332" height="917" alt="sbs" src="https://github.com/user-attachments/assets/96441463-e887-4f19-a69b-2640330a6b90" />
+
+[**Live Demo »**](https://karinekenberg.github.io/webcomic-2/)
 
 This project is a digital picture book featuring the adventures of Björn, Selma, and Elvira. It is built as a lightweight single-page application (SPA) using a "mobile-first" approach and CSS Grid for a seamless reading experience across all devices.
 
@@ -44,3 +47,4 @@ As part of an IT Security Engineering education, the following principles were a
 ---
 
 *Developed by a Fullstack Web Developer and IT Security Engineering student, with a focus on combining secure coding practices with sustainable web development.*
+
