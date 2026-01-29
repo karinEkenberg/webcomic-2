@@ -7,11 +7,13 @@ html,
 body {
   margin: 0;
   padding: 0;
-  height: 100vh;
-  width: 100vw;
-  overflow: hidden;
+  min-height: 100vh;
   background-color: #fdfaf6;
   font-family: "Segoe UI", Tahoma, sans-serif;
+}
+
+.sr-only {
+  display: none;
 }
 
 /* 2. Behållaren för sagan */
@@ -25,9 +27,10 @@ body {
   scroll-behavior: smooth;
   touch-action: pan-x;
   -webkit-overflow-scrolling: touch;
+  background-image: none !important;
+  background-color: #fdfaf6;
 }
 
-/* Dölj scrollbar */
 .book-container::-webkit-scrollbar {
   display: none;
 }
@@ -44,27 +47,47 @@ body {
   scroll-snap-align: start;
   display: flex;
   justify-content: center;
-  align-items: center;
-  padding: 4vh;
+  align-items: flex-start;
+  padding: 15px; /* Något mindre padding för mer plats */
+  overflow-y: auto;
 }
 
 .content {
-  display: grid;
-  grid-template-columns: 1fr; /* Mobil: en kolumn */
+  display: flex;
+  flex-direction: column;
   gap: 20px;
-  align-items: center;
-  justify-items: center;
-  width: 95%;
-  max-width: 1200px; /* Håller ihop boken på jättestora skärmar */
-  margin: auto;
+  width: 100%;
+  max-width: 600px;
+  margin: 0 auto;
 }
 
-/* Skrivbordslayout: Två kolumner */
+/* --- SKRIVBORDSLAYOUT (Dator - över 900px) --- */
 @media (min-width: 900px) {
+  html,
+  body {
+    overflow: hidden;
+  }
+
+  .book-container {
+    background-image: url("../images/sbs-book-cover.png") !important;
+    background-size: 70% auto !important;
+    background-repeat: no-repeat !important;
+    background-position: center !important;
+    background-color: #ffffff !important;
+  }
+
+  .page {
+    align-items: center;
+    padding: 4vh;
+    overflow-y: hidden;
+    background-color: rgba(253, 250, 246, 0.4);
+  }
+
   .content {
+    display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 60px;
-    align-items: start; /* Startar blocken från toppen av gridden */
+    gap: 100px;
+    max-width: 65%;
   }
 }
 
@@ -72,40 +95,35 @@ body {
 .story-block {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 15px; /* Avståndet mellan bild och text */
+  align-items: flex-start;
+  gap: 10px;
   width: 100%;
 }
 
 img {
   max-width: 100%;
-  max-height: 48vh; /* Balanserad höjd för att få plats med text under */
+  /* MINSKADE BILDER FÖR MOBIL: 25% av skärmhöjden istället för 35% */
+  max-height: 25vh;
   object-fit: contain;
   filter: drop-shadow(3px 3px 6px rgba(0, 0, 0, 0.1));
 }
 
+@media (min-width: 900px) {
+  img {
+    max-height: 45vh; /* Behåll stora bilder på datorn */
+  }
+}
+
 p {
-  font-size: 1.1rem;
+  font-size: 1rem;
   line-height: 1.4;
   margin: 0;
   text-align: left;
   color: #161616;
-  max-width: 50ch; /* Något smalare för bättre läsbarhet */
+  max-width: 45ch;
 }
 
-/* 4. Hjälpfunktioner och Instruktioner */
-.sr-only {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  padding: 0;
-  margin: -1px;
-  overflow: hidden;
-  clip: rect(0, 0, 0, 0);
-  border: 0;
-}
-
+/* 4. Instruktioner */
 .hint-box {
   position: fixed;
   bottom: 20px;
@@ -131,8 +149,6 @@ p {
   pointer-events: none;
   animation: none;
 }
-
-/* Media query för att visa rätt instruktion */
 .pc-hint {
   display: block;
 }
