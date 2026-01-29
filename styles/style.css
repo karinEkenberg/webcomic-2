@@ -1,0 +1,83 @@
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  height: 100vh;
+  width: 100vw;
+  overflow: hidden;
+  background-color: #fdfaf6;
+  font-family: "Segoe UI", Tahoma, sans-serif;
+}
+
+.book-container {
+  display: flex;
+  width: 100vw;
+  height: 100vh;
+  overflow-x: scroll;
+  overflow-y: hidden; /* Förhindrar vertikal scroll helt */
+  scroll-snap-type: x mandatory;
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Dölj scrollbar */
+.book-container::-webkit-scrollbar {
+  display: none;
+}
+.book-container {
+  overflow-x: auto;
+  overflow-y: hidden;
+  touch-action: pan-x; /* Tvingar mobilen att bara tillåta horisontella svep */
+  -webkit-overflow-scrolling: touch;
+}
+
+.page {
+  flex: 0 0 100vw;
+  width: 100vw;
+  height: 100vh;
+  scroll-snap-align: start;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 2vh; /* Använder vh för att skala med skärmen */
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly; /* Sprider ut bilderna jämnt på höjden */
+  align-items: center;
+  height: 100%; /* Tar upp hela sidans höjd */
+  max-width: 90%;
+}
+
+img {
+  max-width: 100%;
+  /* Eftersom du har TVÅ bilder måste de vara under 40% höga för att texten ska få plats */
+  max-height: 38vh;
+  object-fit: contain;
+  filter: drop-shadow(3px 3px 6px rgba(0, 0, 0, 0.1));
+}
+
+p {
+  font-size: 1rem;
+  line-height: 1.3;
+  margin: 5px 0;
+  text-align: left;
+  color: #333;
+  max-width: 60ch;
+}
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  border: 0;
+}
