@@ -1,4 +1,5 @@
 "use strict";
+history.scrollRestoration = "manual";
 
 document.addEventListener("DOMContentLoaded", () => {
   const container = document.querySelector(".book-container");
@@ -6,6 +7,10 @@ document.addEventListener("DOMContentLoaded", () => {
   const closeButtons = document.querySelectorAll(".close-hint");
   const progressIndicator = document.getElementById("progress-indicator");
   const totalPages = document.querySelectorAll(".page").length;
+  const pages = document.querySelectorAll(".page");
+  pages.forEach((page) => (page.scrollTop = 0));
+
+  container.scrollLeft = 0;
 
   const hideHints = () => {
     hints.forEach((hint) => {
