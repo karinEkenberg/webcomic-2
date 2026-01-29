@@ -1,59 +1,46 @@
-# Children's Storybook Project
+# Sagan om Björn och Selma: Uppdrag Magivarelser
+
+An interactive, web-based children's book designed with a focus on performance, accessibility, and environmental impact.
+
+## Project Overview
+
+This project is a digital picture book featuring the adventures of Björn, Selma, and Elvira. It is built as a lightweight single-page application (SPA) using a "mobile-first" approach and CSS Grid for a seamless reading experience across all devices.
+
+## Performance & Sustainability
+
+The project is built following **Green IT** principles to minimize carbon emissions and energy consumption.
+
+* **Digital Carbon Rating: A+** – The codebase is extremely optimized, with HTML, CSS, and JS making up less than 1% of the total page weight.
+* **Ecograder Score: 61/100** – High marks in UX Design and Accessibility, with future optimizations planned for image compression and green hosting.
+* **Lighthouse Scores:**
+* **Performance: 100/100**
+* **Accessibility: 100/100**
+* **Best Practices: 100/100**
+* **SEO: 100/100**
 
 
 
-A web-based interactive storybook created for my children, focusing on a seamless digital reading experience.
+## Technical Features
 
+* **Responsive Layout:** CSS Grid handles side-by-side spreads on desktop and a vertical stack on mobile.
+* **Custom Navigation:** Supports keyboard arrow keys and touch gestures.
+* **Accessibility (A11y):** Full screen-reader support via semantic HTML and `sr-only` headers.
+* **Performance:** Native CSS Scroll Snap for smooth transitions without heavy JavaScript libraries.
 
+## Security & Best Practices
 
-## Project Vision
+As part of an IT Security Engineering education, the following principles were applied:
 
-The story, including all text and illustrations, is original work created specifically for a younger audience (ages 4–6). 
+* **Strict DOM Management:** Minimized script execution and secure event handling.
+* **Privacy:** No tracking scripts or third-party cookies.
+* **Clean Code:** Adheres to "Strict Mode" JavaScript and semantic CSS.
 
+## Built With
 
+* HTML5
+* CSS3 (Grid, Flexbox, Animations)
+* Vanilla JavaScript (ES6+)
 
-### Artistic Direction
+---
 
-The illustrations feature a deliberate "hand-drawn" and "sketchy" aesthetic. This style was chosen intentionally to resonate with children's own creativity and to provide a warm, approachable feeling that differs from polished commercial graphics.
-
-
-
-## Features
-
-- Original storytelling and character design.
-
-- Minimalist web interface to keep focus on the narrative.
-
-- Responsive design for reading on tablets and mobile devices.
-
-- Focus on performance and accessibility.
-
-
-
-## Technical Implementation
-
-This project is built using a "Vanilla" web stack to ensure high performance and a low environmental footprint:
-
-- HTML5
-
-- CSS3
-
-- JavaScript
-
-
-
-The deployment is fully automated via GitHub Actions, ensuring that the latest version of the story is always available online.
-
-
-
-## Security and Best Practices
-
-As part of an ongoing focus on IT security, this project follows best practices for web development:
-
-- Optimized asset loading (WebP format).
-
-- Secure deployment pipeline.
-
-- Clean, maintainable code structure without unnecessary third-party dependencies.
-
-
+*Developed by a Fullstack Web Developer and IT Security Engineering student, with a focus on combining secure coding practices with sustainable web development.*
