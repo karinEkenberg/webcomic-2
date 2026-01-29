@@ -12,8 +12,17 @@ body {
   font-family: "Segoe UI", Tahoma, sans-serif;
 }
 
+/* Tillgänglighet: Dölj rubriker men låt skärmläsare hitta dem */
 .sr-only {
-  display: none;
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
 }
 
 /* 2. Behållaren för sagan */
@@ -31,6 +40,7 @@ body {
   background-color: #fdfaf6;
 }
 
+/* Dölj scrollbar men behåll funktionalitet */
 .book-container::-webkit-scrollbar {
   display: none;
 }
@@ -45,10 +55,12 @@ body {
   width: 100vw;
   height: 100vh;
   scroll-snap-align: start;
+  /* Viktigt: Förhindrar att flera sidor hoppas över vid swipe */
+  scroll-snap-stop: always;
   display: flex;
   justify-content: center;
   align-items: flex-start;
-  padding: 15px; /* Något mindre padding för mer plats */
+  padding: 15px;
   overflow-y: auto;
 }
 
@@ -95,22 +107,21 @@ body {
 .story-block {
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
+  align-items: flex-start; /* Allt i blocket börjar från vänster */
   gap: 10px;
   width: 100%;
 }
 
 img {
   max-width: 100%;
-  /* MINSKADE BILDER FÖR MOBIL: 25% av skärmhöjden istället för 35% */
-  max-height: 25vh;
+  max-height: 25vh; /* Mindre bilder på mobil för att prioritera text */
   object-fit: contain;
   filter: drop-shadow(3px 3px 6px rgba(0, 0, 0, 0.1));
 }
 
 @media (min-width: 900px) {
   img {
-    max-height: 45vh; /* Behåll stora bilder på datorn */
+    max-height: 45vh; /* Större bilder inuti boken på datorn */
   }
 }
 
@@ -118,12 +129,12 @@ p {
   font-size: 1rem;
   line-height: 1.4;
   margin: 0;
-  text-align: left;
+  text-align: left; /* All text är nu vänsterställd */
   color: #161616;
   max-width: 45ch;
 }
 
-/* 4. Instruktioner */
+/* 4. Instruktioner och Hjälpmedel */
 .hint-box {
   position: fixed;
   bottom: 20px;
@@ -149,6 +160,22 @@ p {
   pointer-events: none;
   animation: none;
 }
+
+/* Sidräknaren (1 / 16) */
+#progress-indicator {
+  position: fixed;
+  bottom: 20px;
+  left: 20px;
+  background: rgba(255, 255, 255, 0.9);
+  padding: 5px 15px;
+  border-radius: 20px;
+  font-weight: bold;
+  font-size: 0.9rem;
+  z-index: 3000;
+  border: 1px solid #333;
+  pointer-events: none;
+}
+
 .pc-hint {
   display: block;
 }

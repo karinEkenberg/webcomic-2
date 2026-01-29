@@ -4,6 +4,8 @@ document.addEventListener("DOMContentLoaded", () => {
   const container = document.querySelector(".book-container");
   const hints = document.querySelectorAll(".hint-box");
   const closeButtons = document.querySelectorAll(".close-hint");
+  const progressIndicator = document.getElementById("progress-indicator");
+  const totalPages = document.querySelectorAll(".page").length;
 
   const hideHints = () => {
     hints.forEach((hint) => {
@@ -14,15 +16,12 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   };
 
-  // 1. Stäng manuellt
   closeButtons.forEach((btn) => {
     btn.addEventListener("click", hideHints);
   });
 
-  // 2. Timer: Stäng automatiskt efter 5 sekunder
   setTimeout(hideHints, 5000);
 
-  // 3. Navigation (Piltangenter)
   document.addEventListener("keydown", (e) => {
     const scrollAmount = window.innerWidth;
     if (e.key === "ArrowRight") {
@@ -34,7 +33,6 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
-  // 4. Mushjuls-fix
   container.addEventListener(
     "wheel",
     (evt) => {
@@ -45,5 +43,18 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     },
     { passive: false },
+  );
+
+  container.addEventListener(
+    "scroll",
+    () => {
+      const currentPage =
+        Math.round(container.scrollLeft / window.innerWidth) + 1;
+
+      if (progressIndicator) {
+        progressIndicator.innerText = `${currentPage} / ${totalPages}`;
+      }
+    },
+    { passive: true },
   );
 });
