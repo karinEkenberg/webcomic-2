@@ -1,34 +1,49 @@
 "use strict";
 
-const container = document.querySelector(".book-container");
+document.addEventListener("DOMContentLoaded", () => {
+  const container = document.querySelector(".book-container");
+  const hints = document.querySelectorAll(".hint-box");
+  const closeButtons = document.querySelectorAll(".close-hint");
 
-// Funktion för att bläddra till nästa/föregående sida
-function navigate(direction) {
-  const pageWidth = window.innerWidth;
-  container.scrollBy({
-    left: direction === "next" ? pageWidth : -pageWidth,
-    behavior: "smooth",
+  const hideHints = () => {
+    hints.forEach((hint) => {
+      hint.classList.add("hint-hidden");
+      setTimeout(() => {
+        hint.style.display = "none";
+      }, 500);
+    });
+  };
+
+  // 1. Stäng manuellt
+  closeButtons.forEach((btn) => {
+    btn.addEventListener("click", hideHints);
   });
-}
 
-// Lyssna på piltangenter på tangentbordet (Bra för tillgänglighet)
-document.addEventListener("keydown", (e) => {
-  if (e.key === "ArrowRight") navigate("next");
-  if (e.key === "ArrowLeft") navigate("prev");
-});
+  // 2. Timer: Stäng automatiskt efter 5 sekunder
+  setTimeout(hideHints, 5000);
 
-("use strict");
-
-const container = document.querySelector(".book-container");
-
-container.addEventListener(
-  "wheel",
-  (evt) => {
-    // Om användaren scrollar vertikalt, tvinga den att gå horisontellt istället
-    if (evt.deltaY !== 0) {
-      evt.preventDefault();
-      container.scrollLeft += evt.deltaY;
+  // 3. Navigation (Piltangenter)
+  document.addEventListener("keydown", (e) => {
+    const scrollAmount = window.innerWidth;
+    if (e.key === "ArrowRight") {
+      container.scrollBy({ left: scrollAmount, behavior: "smooth" });
+      hideHints();
+    } else if (e.key === "ArrowLeft") {
+      container.scrollBy({ left: -scrollAmount, behavior: "smooth" });
+      hideHints();
     }
-  },
-  { passive: false },
-);
+  });
+
+  // 4. Mushjuls-fix
+  container.addEventListener(
+    "wheel",
+    (evt) => {
+      if (evt.deltaY !== 0) {
+        evt.preventDefault();
+        container.scrollLeft += evt.deltaY;
+        hideHints();
+      }
+    },
+    { passive: false },
+  );
+});

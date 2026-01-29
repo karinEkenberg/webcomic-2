@@ -1,3 +1,4 @@
+/* 1. Grundinställningar */
 * {
   box-sizing: border-box;
 }
@@ -13,14 +14,16 @@ body {
   font-family: "Segoe UI", Tahoma, sans-serif;
 }
 
+/* 2. Behållaren för sagan */
 .book-container {
   display: flex;
   width: 100vw;
   height: 100vh;
-  overflow-x: scroll;
-  overflow-y: hidden; /* Förhindrar vertikal scroll helt */
+  overflow-x: auto;
+  overflow-y: hidden;
   scroll-snap-type: x mandatory;
   scroll-behavior: smooth;
+  touch-action: pan-x;
   -webkit-overflow-scrolling: touch;
 }
 
@@ -29,12 +32,11 @@ body {
   display: none;
 }
 .book-container {
-  overflow-x: auto;
-  overflow-y: hidden;
-  touch-action: pan-x; /* Tvingar mobilen att bara tillåta horisontella svep */
-  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
 }
 
+/* 3. Sidor och innehållslayout */
 .page {
   flex: 0 0 100vw;
   width: 100vw;
@@ -43,34 +45,56 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 2vh; /* Använder vh för att skala med skärmen */
+  padding: 4vh;
 }
 
 .content {
+  display: grid;
+  grid-template-columns: 1fr; /* Mobil: en kolumn */
+  gap: 20px;
+  align-items: center;
+  justify-items: center;
+  width: 95%;
+  max-width: 1200px; /* Håller ihop boken på jättestora skärmar */
+  margin: auto;
+}
+
+/* Skrivbordslayout: Två kolumner */
+@media (min-width: 900px) {
+  .content {
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+    align-items: start; /* Startar blocken från toppen av gridden */
+  }
+}
+
+/* Gruppering av Bild + Text */
+.story-block {
   display: flex;
   flex-direction: column;
-  justify-content: space-evenly; /* Sprider ut bilderna jämnt på höjden */
   align-items: center;
-  height: 100%; /* Tar upp hela sidans höjd */
-  max-width: 90%;
+  justify-content: center;
+  gap: 15px; /* Avståndet mellan bild och text */
+  width: 100%;
 }
 
 img {
   max-width: 100%;
-  /* Eftersom du har TVÅ bilder måste de vara under 40% höga för att texten ska få plats */
-  max-height: 38vh;
+  max-height: 48vh; /* Balanserad höjd för att få plats med text under */
   object-fit: contain;
   filter: drop-shadow(3px 3px 6px rgba(0, 0, 0, 0.1));
 }
 
 p {
-  font-size: 1rem;
-  line-height: 1.3;
-  margin: 5px 0;
+  font-size: 1.1rem;
+  line-height: 1.4;
+  margin: 0;
   text-align: left;
   color: #161616;
-  max-width: 60ch;
+  max-width: 50ch; /* Något smalare för bättre läsbarhet */
 }
+
+/* 4. Hjälpfunktioner och Instruktioner */
 .sr-only {
   position: absolute;
   width: 1px;
@@ -80,4 +104,90 @@ p {
   overflow: hidden;
   clip: rect(0, 0, 0, 0);
   border: 0;
+}
+
+.hint-box {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background: white;
+  padding: 15px;
+  border-radius: 12px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+  z-index: 2000;
+  text-align: center;
+  border: 2px solid #333;
+  width: 220px;
+  opacity: 1;
+  transition:
+    opacity 0.4s ease,
+    transform 0.4s ease;
+  animation: pulseHint 2s infinite ease-in-out;
+}
+
+.hint-hidden {
+  opacity: 0;
+  transform: translateY(20px) scale(0.9);
+  pointer-events: none;
+  animation: none;
+}
+
+/* Media query för att visa rätt instruktion */
+.pc-hint {
+  display: block;
+}
+.mobile-hint {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .pc-hint {
+    display: none;
+  }
+  .mobile-hint {
+    display: block;
+  }
+}
+
+.close-hint {
+  background: #333;
+  color: white;
+  border: none;
+  padding: 8px 20px;
+  border-radius: 20px;
+  cursor: pointer;
+  margin-top: 10px;
+  font-weight: bold;
+}
+
+/* 5. Animationer */
+@keyframes pulseHint {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+    border-color: #ff9d00;
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.swipe-icon {
+  font-size: 2rem;
+  margin: 10px 0;
+  animation: swipeSide 2s infinite;
+}
+
+@keyframes swipeSide {
+  0% {
+    transform: translateX(-10px);
+  }
+  50% {
+    transform: translateX(10px);
+  }
+  100% {
+    transform: translateX(-10px);
+  }
 }
