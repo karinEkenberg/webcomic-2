@@ -1,6 +1,5 @@
 "use strict";
 
-// Förhindra att webbläsaren kommer ihåg skrollposition vid omladdning
 if ("scrollRestoration" in history) {
   history.scrollRestoration = "manual";
 }
@@ -8,12 +7,11 @@ if ("scrollRestoration" in history) {
 document.addEventListener("DOMContentLoaded", () => {
   const container = document.querySelector(".book-container");
   const hints = document.querySelectorAll(".hint-box");
-  const closeButtons = document.querySelectorAll(".close-hint");
   const progressIndicator = document.getElementById("progress-indicator");
   const pages = document.querySelectorAll(".page");
   const totalPages = pages.length;
 
-  // Nollställ positioner direkt
+  // Initial nollställning
   container.scrollLeft = 0;
   pages.forEach((page) => (page.scrollTop = 0));
 
@@ -26,14 +24,10 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   };
 
-  closeButtons.forEach((btn) => {
-    btn.addEventListener("click", hideHints);
-  });
-
-  // Stäng automatiskt efter 5 sekunder
+  // Timer för anvisningar (Knapp-koden är nu borttagen härifrån)
   setTimeout(hideHints, 5000);
 
-  // Piltangentsnavigation
+  // Navigation via piltangenter
   document.addEventListener("keydown", (e) => {
     const scrollAmount = window.innerWidth;
     if (e.key === "ArrowRight") {
@@ -45,42 +39,42 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
-  // Mushjul horisontellt
+  // Förbättrad mushjuls-fix för horisontell scroll
   container.addEventListener(
     "wheel",
     (evt) => {
-      if (evt.deltaY !== 0) {
+      // Om man rullar hjulet (Y) eller drar i sidled på trackpad (X)
+      if (evt.deltaY !== 0 || evt.deltaX !== 0) {
         evt.preventDefault();
-        container.scrollLeft += evt.deltaY;
+        
+        // Vi adderar både X och Y för att stödja alla typer av möss/trackpads
+        // Vi använder scrollBy istället för scrollLeft direkt för bättre samspel med CSS
+        container.scrollLeft += (evt.deltaY + evt.deltaX);
+        
         hideHints();
       }
     },
-    { passive: false },
+    { passive: false }
   );
 
-  // Sidindikator (beräknas vid skroll)
+  // Uppdatera sidindikatorn
   container.addEventListener(
     "scroll",
     () => {
-      // Byter nummer när hälften av nästa sida visas
-      const currentPage =
-        Math.floor(
-          (container.scrollLeft + window.innerWidth / 2) / window.innerWidth,
-        ) + 1;
-
+      const currentPage = Math.floor((container.scrollLeft + window.innerWidth / 2) / window.innerWidth) + 1;
       if (progressIndicator) {
         progressIndicator.innerText = `${currentPage} / ${totalPages}`;
       }
     },
-    { passive: true },
+    { passive: true }
   );
 
-  // Extra säkerhetsåtgärd för mobila webbläsare vid fullständig laddning
+  // Säkerhetsåtgärd för rendering
   window.addEventListener("load", () => {
     window.scrollTo(0, 0);
     setTimeout(() => {
       container.scrollLeft = 0;
-      pages.forEach((page) => (page.scrollTop = 0));
+      pages.forEach((p) => (p.scrollTop = 0));
     }, 150);
   });
 });
